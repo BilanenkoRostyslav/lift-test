@@ -343,7 +343,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         }>,
  *     },
  *     serializer?: bool|array{ // Serializer configuration
- *         enabled?: bool, // Default: false
+ *         enabled?: bool, // Default: true
  *         enable_attributes?: bool, // Default: true
  *         name_converter?: scalar|null,
  *         circular_reference_handler?: scalar|null,
@@ -360,7 +360,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         }>,
  *     },
  *     property_access?: bool|array{ // Property access configuration
- *         enabled?: bool, // Default: false
+ *         enabled?: bool, // Default: true
  *         magic_call?: bool, // Default: false
  *         magic_get?: bool, // Default: true
  *         magic_set?: bool, // Default: true
@@ -368,11 +368,11 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         throw_exception_on_invalid_property_path?: bool, // Default: true
  *     },
  *     type_info?: bool|array{ // Type info configuration
- *         enabled?: bool, // Default: false
+ *         enabled?: bool, // Default: true
  *         aliases?: array<string, scalar|null>,
  *     },
  *     property_info?: bool|array{ // Property info configuration
- *         enabled?: bool, // Default: false
+ *         enabled?: bool, // Default: true
  *         with_constructor_extractor?: bool, // Registers the constructor extractor. // Default: true
  *     },
  *     cache?: array{ // Cache configuration
@@ -417,7 +417,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         resources?: array<string, scalar|null>,
  *     },
  *     messenger?: bool|array{ // Messenger configuration
- *         enabled?: bool, // Default: false
+ *         enabled?: bool, // Default: true
  *         routing?: array<string, array{ // Default: []
  *             senders?: list<scalar|null>,
  *         }>,
@@ -463,7 +463,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     },
  *     disallow_search_engine_index?: bool, // Enabled by default when debug is enabled. // Default: true
  *     http_client?: bool|array{ // HTTP Client configuration
- *         enabled?: bool, // Default: false
+ *         enabled?: bool, // Default: true
  *         max_host_connections?: int, // The maximum number of connections to a single host.
  *         default_options?: array{
  *             headers?: array<string, mixed>,
@@ -681,28 +681,337 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         enabled?: bool, // Default: false
  *     },
  * }
+ * @psalm-type DoctrineMongodbConfig = array{
+ *     document_managers?: array<string, array{ // Default: []
+ *         connection?: scalar|null,
+ *         database?: scalar|null,
+ *         logging?: bool, // Default: "%kernel.debug%"
+ *         profiler?: array{
+ *             enabled?: bool, // Default: "%kernel.debug%"
+ *             pretty?: bool, // Default: "%kernel.debug%"
+ *         },
+ *         default_document_repository_class?: scalar|null, // Default: "Doctrine\\ODM\\MongoDB\\Repository\\DocumentRepository"
+ *         default_gridfs_repository_class?: scalar|null, // Default: "Doctrine\\ODM\\MongoDB\\Repository\\DefaultGridFSRepository"
+ *         repository_factory?: scalar|null, // Default: "doctrine_mongodb.odm.container_repository_factory"
+ *         persistent_collection_factory?: scalar|null, // Default: null
+ *         auto_mapping?: bool, // Default: false
+ *         filters?: array<string, string|array{ // Default: []
+ *             class: scalar|null,
+ *             enabled?: bool, // Default: false
+ *             parameters?: array<string, mixed>,
+ *         }>,
+ *         metadata_cache_driver?: string|array{
+ *             type?: scalar|null, // Default: "array"
+ *             class?: scalar|null,
+ *             host?: scalar|null,
+ *             port?: int,
+ *             instance_class?: scalar|null,
+ *             id?: scalar|null,
+ *             namespace?: scalar|null,
+ *         },
+ *         use_transactional_flush?: bool, // Default: false
+ *         mappings?: array<string, bool|string|array{ // Default: []
+ *             mapping?: scalar|null, // Default: true
+ *             type?: scalar|null,
+ *             dir?: scalar|null,
+ *             prefix?: scalar|null,
+ *             alias?: scalar|null,
+ *             is_bundle?: bool,
+ *         }>,
+ *     }>,
+ *     connections?: array<string, array{ // Default: []
+ *         server?: scalar|null,
+ *         options?: array{
+ *             authMechanism?: "SCRAM-SHA-1"|"SCRAM-SHA-256"|"MONGODB-CR"|"MONGODB-X509"|"PLAIN"|"GSSAPI",
+ *             connectTimeoutMS?: int,
+ *             db?: scalar|null,
+ *             authSource?: scalar|null,
+ *             journal?: bool,
+ *             password?: scalar|null,
+ *             readPreference?: "primary"|"primaryPreferred"|"secondary"|"secondaryPreferred"|"nearest",
+ *             readPreferenceTags?: list<array<string, scalar|null>>,
+ *             replicaSet?: scalar|null,
+ *             socketTimeoutMS?: int,
+ *             ssl?: bool,
+ *             tls?: bool,
+ *             tlsAllowInvalidCertificates?: bool,
+ *             tlsAllowInvalidHostnames?: bool,
+ *             tlsCAFile?: scalar|null,
+ *             tlsCertificateKeyFile?: scalar|null,
+ *             tlsCertificateKeyFilePassword?: scalar|null,
+ *             tlsDisableCertificateRevocationCheck?: bool,
+ *             tlsDisableOCSPEndpointCheck?: bool,
+ *             tlsInsecure?: bool,
+ *             username?: scalar|null,
+ *             retryReads?: bool,
+ *             retryWrites?: bool,
+ *             w?: scalar|null,
+ *             wTimeoutMS?: int,
+ *         },
+ *         driver_options?: array{
+ *             context?: scalar|null, // Deprecated: The "context" driver option is deprecated and will be removed in 3.0. This option is ignored by the MongoDB driver version 2. // Default: null
+ *         },
+ *         autoEncryption?: array{
+ *             bypassAutoEncryption?: bool,
+ *             keyVaultClient?: scalar|null,
+ *             keyVaultNamespace?: scalar|null,
+ *             masterKey?: list<mixed>,
+ *             kmsProvider: array{
+ *                 type: scalar|null,
+ *                 accessKeyId?: scalar|null,
+ *                 secretAccessKey?: scalar|null,
+ *                 sessionToken?: scalar|null,
+ *                 tenantId?: scalar|null,
+ *                 clientId?: scalar|null,
+ *                 clientSecret?: scalar|null,
+ *                 keyVaultEndpoint?: scalar|null,
+ *                 identityPlatformEndpoint?: scalar|null,
+ *                 keyName?: scalar|null,
+ *                 keyVersion?: scalar|null,
+ *                 email?: scalar|null,
+ *                 privateKey?: scalar|null,
+ *                 endpoint?: scalar|null,
+ *                 projectId?: scalar|null,
+ *                 location?: scalar|null,
+ *                 keyRing?: scalar|null,
+ *                 key?: scalar|null,
+ *             },
+ *             schemaMap?: list<mixed>,
+ *             encryptedFieldsMap?: array<string, array{ // Default: []
+ *                 fields?: list<array{ // Default: []
+ *                     path: scalar|null,
+ *                     bsonType: scalar|null,
+ *                     keyId: mixed,
+ *                     queries?: array{
+ *                         queryType: scalar|null,
+ *                         min?: mixed,
+ *                         max?: mixed,
+ *                         sparsity?: int,
+ *                         precision?: int,
+ *                         trimFactor?: int,
+ *                         contention?: int,
+ *                     },
+ *                 }>,
+ *             }>,
+ *             extraOptions?: array{
+ *                 mongocryptdURI?: scalar|null,
+ *                 mongocryptdBypassSpawn?: bool,
+ *                 mongocryptdSpawnPath?: scalar|null,
+ *                 mongocryptdSpawnArgs?: list<scalar|null>,
+ *                 cryptSharedLibPath?: scalar|null,
+ *                 cryptSharedLibRequired?: bool,
+ *             },
+ *             bypassQueryAnalysis?: bool,
+ *             tlsOptions?: array{
+ *                 tlsCAFile?: scalar|null,
+ *                 tlsCertificateKeyFile?: scalar|null,
+ *                 tlsCertificateKeyFilePassword?: scalar|null,
+ *                 tlsDisableOCSPEndpointCheck?: bool,
+ *             },
+ *         },
+ *     }>,
+ *     resolve_target_documents?: array<string, scalar|null>,
+ *     types?: array<string, string|array{ // Default: []
+ *         class: scalar|null,
+ *     }>,
+ *     proxy_namespace?: scalar|null, // Default: "MongoDBODMProxies"
+ *     proxy_dir?: scalar|null, // Default: "%kernel.cache_dir%/doctrine/odm/mongodb/Proxies"
+ *     enable_native_lazy_objects?: bool, // Deprecated: The "enable_native_lazy_objects" option is deprecated and will be removed in 6.0. Native Lazy Objects are enable by default when using PHP 8.4+ and doctrine/mongodb-odm 2.14+. // Requires PHP 8.4+ and doctrine/mongodb-odm 2.14+ // Default: true
+ *     enable_lazy_ghost_objects?: bool, // Deprecated: The "enable_lazy_ghost_objects" option is deprecated and will be removed in 6.0. Native Lazy Objects are enable by default when using PHP 8.4+ and doctrine/mongodb-odm 2.14+. // Requires doctrine/mongodb-odm 2.12+ // Default: true
+ *     auto_generate_proxy_classes?: scalar|null, // Default: 3
+ *     hydrator_namespace?: scalar|null, // Default: "Hydrators"
+ *     hydrator_dir?: scalar|null, // Default: "%kernel.cache_dir%/doctrine/odm/mongodb/Hydrators"
+ *     auto_generate_hydrator_classes?: scalar|null, // Default: 0
+ *     persistent_collection_namespace?: scalar|null, // Default: "PersistentCollections"
+ *     persistent_collection_dir?: scalar|null, // Default: "%kernel.cache_dir%/doctrine/odm/mongodb/PersistentCollections"
+ *     auto_generate_persistent_collection_classes?: scalar|null, // Default: 0
+ *     default_document_manager?: scalar|null,
+ *     default_connection?: scalar|null,
+ *     default_database?: scalar|null, // Default: "default"
+ *     default_commit_options?: array{
+ *         j?: bool,
+ *         timeout?: int,
+ *         w?: scalar|null,
+ *         wtimeout?: int,
+ *     },
+ *     controller_resolver?: bool|array{
+ *         enabled?: bool, // Default: true
+ *         auto_mapping?: bool, // Set to false to disable using route placeholders as lookup criteria when the object id doesn't match the argument name // Default: true
+ *     },
+ * }
+ * @psalm-type MonologConfig = array{
+ *     use_microseconds?: scalar|null, // Default: true
+ *     channels?: list<scalar|null>,
+ *     handlers?: array<string, array{ // Default: []
+ *         type: scalar|null,
+ *         id?: scalar|null,
+ *         enabled?: bool, // Default: true
+ *         priority?: scalar|null, // Default: 0
+ *         level?: scalar|null, // Default: "DEBUG"
+ *         bubble?: bool, // Default: true
+ *         interactive_only?: bool, // Default: false
+ *         app_name?: scalar|null, // Default: null
+ *         include_stacktraces?: bool, // Default: false
+ *         process_psr_3_messages?: array{
+ *             enabled?: bool|null, // Default: null
+ *             date_format?: scalar|null,
+ *             remove_used_context_fields?: bool,
+ *         },
+ *         path?: scalar|null, // Default: "%kernel.logs_dir%/%kernel.environment%.log"
+ *         file_permission?: scalar|null, // Default: null
+ *         use_locking?: bool, // Default: false
+ *         filename_format?: scalar|null, // Default: "{filename}-{date}"
+ *         date_format?: scalar|null, // Default: "Y-m-d"
+ *         ident?: scalar|null, // Default: false
+ *         logopts?: scalar|null, // Default: 1
+ *         facility?: scalar|null, // Default: "user"
+ *         max_files?: scalar|null, // Default: 0
+ *         action_level?: scalar|null, // Default: "WARNING"
+ *         activation_strategy?: scalar|null, // Default: null
+ *         stop_buffering?: bool, // Default: true
+ *         passthru_level?: scalar|null, // Default: null
+ *         excluded_http_codes?: list<array{ // Default: []
+ *             code?: scalar|null,
+ *             urls?: list<scalar|null>,
+ *         }>,
+ *         accepted_levels?: list<scalar|null>,
+ *         min_level?: scalar|null, // Default: "DEBUG"
+ *         max_level?: scalar|null, // Default: "EMERGENCY"
+ *         buffer_size?: scalar|null, // Default: 0
+ *         flush_on_overflow?: bool, // Default: false
+ *         handler?: scalar|null,
+ *         url?: scalar|null,
+ *         exchange?: scalar|null,
+ *         exchange_name?: scalar|null, // Default: "log"
+ *         channel?: scalar|null, // Default: null
+ *         bot_name?: scalar|null, // Default: "Monolog"
+ *         use_attachment?: scalar|null, // Default: true
+ *         use_short_attachment?: scalar|null, // Default: false
+ *         include_extra?: scalar|null, // Default: false
+ *         icon_emoji?: scalar|null, // Default: null
+ *         webhook_url?: scalar|null,
+ *         exclude_fields?: list<scalar|null>,
+ *         token?: scalar|null,
+ *         region?: scalar|null,
+ *         source?: scalar|null,
+ *         use_ssl?: bool, // Default: true
+ *         user?: mixed,
+ *         title?: scalar|null, // Default: null
+ *         host?: scalar|null, // Default: null
+ *         port?: scalar|null, // Default: 514
+ *         config?: list<scalar|null>,
+ *         members?: list<scalar|null>,
+ *         connection_string?: scalar|null,
+ *         timeout?: scalar|null,
+ *         time?: scalar|null, // Default: 60
+ *         deduplication_level?: scalar|null, // Default: 400
+ *         store?: scalar|null, // Default: null
+ *         connection_timeout?: scalar|null,
+ *         persistent?: bool,
+ *         message_type?: scalar|null, // Default: 0
+ *         parse_mode?: scalar|null, // Default: null
+ *         disable_webpage_preview?: bool|null, // Default: null
+ *         disable_notification?: bool|null, // Default: null
+ *         split_long_messages?: bool, // Default: false
+ *         delay_between_messages?: bool, // Default: false
+ *         topic?: int, // Default: null
+ *         factor?: int, // Default: 1
+ *         tags?: list<scalar|null>,
+ *         console_formatter_options?: mixed, // Default: []
+ *         formatter?: scalar|null,
+ *         nested?: bool, // Default: false
+ *         publisher?: string|array{
+ *             id?: scalar|null,
+ *             hostname?: scalar|null,
+ *             port?: scalar|null, // Default: 12201
+ *             chunk_size?: scalar|null, // Default: 1420
+ *             encoder?: "json"|"compressed_json",
+ *         },
+ *         mongodb?: string|array{
+ *             id?: scalar|null, // ID of a MongoDB\Client service
+ *             uri?: scalar|null,
+ *             username?: scalar|null,
+ *             password?: scalar|null,
+ *             database?: scalar|null, // Default: "monolog"
+ *             collection?: scalar|null, // Default: "logs"
+ *         },
+ *         elasticsearch?: string|array{
+ *             id?: scalar|null,
+ *             hosts?: list<scalar|null>,
+ *             host?: scalar|null,
+ *             port?: scalar|null, // Default: 9200
+ *             transport?: scalar|null, // Default: "Http"
+ *             user?: scalar|null, // Default: null
+ *             password?: scalar|null, // Default: null
+ *         },
+ *         index?: scalar|null, // Default: "monolog"
+ *         document_type?: scalar|null, // Default: "logs"
+ *         ignore_error?: scalar|null, // Default: false
+ *         redis?: string|array{
+ *             id?: scalar|null,
+ *             host?: scalar|null,
+ *             password?: scalar|null, // Default: null
+ *             port?: scalar|null, // Default: 6379
+ *             database?: scalar|null, // Default: 0
+ *             key_name?: scalar|null, // Default: "monolog_redis"
+ *         },
+ *         predis?: string|array{
+ *             id?: scalar|null,
+ *             host?: scalar|null,
+ *         },
+ *         from_email?: scalar|null,
+ *         to_email?: list<scalar|null>,
+ *         subject?: scalar|null,
+ *         content_type?: scalar|null, // Default: null
+ *         headers?: list<scalar|null>,
+ *         mailer?: scalar|null, // Default: null
+ *         email_prototype?: string|array{
+ *             id: scalar|null,
+ *             method?: scalar|null, // Default: null
+ *         },
+ *         verbosity_levels?: array{
+ *             VERBOSITY_QUIET?: scalar|null, // Default: "ERROR"
+ *             VERBOSITY_NORMAL?: scalar|null, // Default: "WARNING"
+ *             VERBOSITY_VERBOSE?: scalar|null, // Default: "NOTICE"
+ *             VERBOSITY_VERY_VERBOSE?: scalar|null, // Default: "INFO"
+ *             VERBOSITY_DEBUG?: scalar|null, // Default: "DEBUG"
+ *         },
+ *         channels?: string|array{
+ *             type?: scalar|null,
+ *             elements?: list<scalar|null>,
+ *         },
+ *     }>,
+ * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
  *     services?: ServicesConfig,
  *     framework?: FrameworkConfig,
+ *     doctrine_mongodb?: DoctrineMongodbConfig,
+ *     monolog?: MonologConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
  *         services?: ServicesConfig,
  *         framework?: FrameworkConfig,
+ *         doctrine_mongodb?: DoctrineMongodbConfig,
+ *         monolog?: MonologConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
  *         services?: ServicesConfig,
  *         framework?: FrameworkConfig,
+ *         doctrine_mongodb?: DoctrineMongodbConfig,
+ *         monolog?: MonologConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
  *         services?: ServicesConfig,
  *         framework?: FrameworkConfig,
+ *         doctrine_mongodb?: DoctrineMongodbConfig,
+ *         monolog?: MonologConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,
