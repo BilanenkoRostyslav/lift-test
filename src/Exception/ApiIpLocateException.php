@@ -8,6 +8,6 @@ class ApiIpLocateException extends \RuntimeException
 {
     public function __construct(?Throwable $previous = null)
     {
-        parent::__construct("Error while getting ip address", $previous);
+        parent::__construct("Error while getting ip address", 0, $previous);
     }
 }

@@ -14,3 +14,9 @@ doctrine_mongodb:
           dir: '%kernel.project_dir%/src/Document'
           prefix: 'App\Document'
           alias: App
+        AppValueObject:
+          is_bundle: false
+          type: attribute
+          dir: '%kernel.project_dir%/src/ValueObject'
+          prefix: 'App\ValueObject'
+          alias: AppValueObject

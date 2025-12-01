@@ -3,6 +3,9 @@
 namespace App\Document;
 
 use App\Repository\UserDataRepository;
+use App\ValueObject\PhoneNumber;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 #[ODM\Document(collection: 'userData', repositoryClass: UserDataRepository::class)]
@@ -14,8 +17,11 @@ class UserData
     private string $firstName;
     #[ODM\Field(type: 'string')]
     private string $lastName;
-    #[ODM\Field(type: 'collection')]
-    private array $phoneNumbers = [];
+    /**
+     * @var Collection<int,PhoneNumber>
+     */
+    #[ODM\EmbedMany(targetDocument: PhoneNumber::class)]
+    private Collection $phoneNumbers;
     #[ODM\Field(type: 'string')]
     private string $ipAddress;
     #[ODM\Field(type: 'string')]
@@ -54,14 +60,20 @@ class UserData
         return $this;
     }
 
+    /**
+     * @return PhoneNumber[]
+     */
     public function getPhoneNumbers(): array
     {
-        return $this->phoneNumbers;
+        return $this->phoneNumbers->toArray();
     }
 
+    /**
+     * @param PhoneNumber[] $phoneNumbers
+     */
     public function setPhoneNumbers(array $phoneNumbers): UserData
     {
-        $this->phoneNumbers = $phoneNumbers;
+        $this->phoneNumbers = new ArrayCollection($phoneNumbers);
         return $this;
     }
 

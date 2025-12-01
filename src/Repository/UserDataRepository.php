@@ -39,6 +39,6 @@ class UserDataRepository extends ServiceDocumentRepository
      */
     public function findAllAndSortBy(OrderBy $column, OrderDirection $direction = OrderDirection::ASC): array
     {
-        return $this->findBy([$column->value => $direction->value]);
+        return $this->findBy([], [$column->value => $direction->value]);
     }
 }

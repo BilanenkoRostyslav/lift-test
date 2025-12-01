@@ -4,12 +4,15 @@ namespace App\DTO;
 
 class UserDataResponseDTO
 {
+    /**
+     * @param string[] $phoneNumbers
+     */
     public function __construct(
-        private string $firstName,
-        private string $lastName,
-        private array  $phoneNumbers,
-        private string $ipAddress,
-        private string $country,
+        private readonly string $firstName,
+        private readonly string $lastName,
+        private readonly array  $phoneNumbers,
+        private readonly string $ipAddress,
+        private readonly string $country,
     )
     {
     }
@@ -24,6 +27,9 @@ class UserDataResponseDTO
         return $this->lastName;
     }
 
+    /**
+     * @return string[]
+     */
     public function getPhoneNumbers(): array
     {
         return $this->phoneNumbers;
@@ -38,5 +44,5 @@ class UserDataResponseDTO
     {
         return $this->country;
     }
-    
+
 }

@@ -5,7 +5,6 @@ namespace App\Service;
 use App\DTO\IpLocationDTO;
 use App\Exception\ApiIpLocateException;
 use Psr\Log\LoggerInterface;
-use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Throwable;
 
@@ -20,29 +19,23 @@ class LocationService
     {
     }
 
-    /**
-     * @throws TransportExceptionInterface
-     */
     public function getLocation(string $ipAddress): IpLocationDTO
     {
-        $response = $this->httpClient->request(
-            'GET',
-            self::IPLOCATE_API_URL . $ipAddress,
-        );
-        if ($response->getStatusCode() !== 200) {
-            $this->logger->error("Error while getting location: {$ipAddress}. Response: {$response->getStatusCode()}");
-            throw new ApiIpLocateException();
-        }
-
         try {
+            $response = $this->httpClient->request(
+                'GET',
+                self::IPLOCATE_API_URL . $ipAddress,
+            );
             $data = json_decode($response->getContent(), true);
         } catch (Throwable $exception) {
-            $this->logger->error("Error while getting location: {$ipAddress}. Exception message: {$exception->getMessage()}");
+            $this->logger->error("Error while getting location. Exception message: {$exception->getMessage()}");
             throw new ApiIpLocateException();
         }
 
         if (empty($data['country'])) {
-            $this->logger->error("Error while getting location: {$ipAddress}. Response does not contain country key. Response: {$data}");
+            $this->logger->error("Error while getting location: {$ipAddress}. Response does not contain country key.", [
+                'data' => $data,
+            ]);
             throw new ApiIpLocateException();
         }
 

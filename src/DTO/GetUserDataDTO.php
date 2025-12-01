@@ -4,28 +4,36 @@ namespace App\DTO;
 
 use App\Enum\OrderBy;
 use App\Enum\OrderDirection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class GetUserDataDTO
 {
-    private OrderBy $orderBy;
-    private OrderDirection $orderDirection;
 
     public function __construct(
-        string $orderBy,
-        string $orderDirection,
+        #[Assert\NotBlank]
+        #[Assert\Choice(
+            callback: [OrderBy::class, 'values'],
+            message: 'The value "{{ value }}" is invalid. Allowed values are: {{ choices }}'
+        )]
+        private readonly string $orderBy,
+
+        #[Assert\NotBlank]
+        #[Assert\Choice(
+            callback: [OrderDirection::class, 'values'],
+            message: 'The value "{{ value }}" is invalid. Allowed values are: {{ choices }}'
+        )]
+        private readonly string $orderDirection,
     )
     {
-        $this->orderBy = OrderBy::from($orderBy);
-        $this->orderDirection = OrderDirection::from($orderDirection);
     }
 
     public function getOrderBy(): OrderBy
     {
-        return $this->orderBy;
+        return OrderBy::from($this->orderBy);
     }
 
     public function getOrderDirection(): OrderDirection
     {
-        return $this->orderDirection;
+        return OrderDirection::from($this->orderDirection);
     }
 }

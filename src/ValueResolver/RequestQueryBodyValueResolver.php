@@ -3,22 +3,23 @@
 namespace App\ValueResolver;
 
 use App\Attribute\RequestQueryBody;
-use App\Exception\BadRequestException;
+use App\Exception\RequestDecodeException;
+use App\Exception\ValidationException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class RequestQueryBodyValueResolver implements ValueResolverInterface
 {
+
     public function __construct(
         private readonly DenormalizerInterface $denormalizer,
         private readonly LoggerInterface       $logger,
+        private ValidatorInterface             $validator,
     )
     {
     }
@@ -32,7 +33,7 @@ class RequestQueryBodyValueResolver implements ValueResolverInterface
      * @param Request $request
      * @param ArgumentMetadata $argument
      * @return iterable<object>
-     * @throws BadRequestException
+     * @throws RequestDecodeException
      */
     public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
@@ -43,7 +44,11 @@ class RequestQueryBodyValueResolver implements ValueResolverInterface
             $data = $this->denormalizer->denormalize($request->query->all(), $argument->getType());
         } catch (ExceptionInterface $e) {
             $this->logger->error($e->getMessage());
-            throw new BadRequestException();
+            throw new RequestDecodeException();
+        }
+        $errors = $this->validator->validate($data);
+        if (count($errors) > 0) {
+            throw new ValidationException($errors);
         }
         return [$data];
     }

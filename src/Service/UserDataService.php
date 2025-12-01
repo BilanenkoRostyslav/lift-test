@@ -9,6 +9,7 @@ use App\DTO\IpLocationDTO;
 use App\DTO\UserDataResponseDTO;
 use App\Factory\UserDataMessageFactory;
 use App\Repository\UserDataRepository;
+use App\ValueObject\PhoneNumber;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
@@ -45,7 +46,7 @@ class UserDataService
             return new UserDataResponseDTO(
                 $userData->getFirstName(),
                 $userData->getLastName(),
-                $userData->getPhoneNumbers(),
+                array_map(fn(PhoneNumber $phoneNumber) => $phoneNumber->getPhoneNumber(), $userData->getPhoneNumbers()),
                 $userData->getIpAddress(),
                 $userData->getCountry(),
             );

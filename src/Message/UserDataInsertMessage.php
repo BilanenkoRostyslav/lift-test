@@ -9,6 +9,9 @@ use Symfony\Component\Messenger\Attribute\AsMessage;
 #[AsMessage]
 class UserDataInsertMessage
 {
+    /**
+     * @param string[] $phoneNumbers
+     */
     public function __construct(
         private readonly string $firstName,
         private readonly string $lastName,
@@ -30,6 +33,9 @@ class UserDataInsertMessage
         return $this->lastName;
     }
 
+    /**
+     * @return string[]
+     */
     public function getPhoneNumbers(): array
     {
         return $this->phoneNumbers;

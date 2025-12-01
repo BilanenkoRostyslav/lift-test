@@ -4,7 +4,7 @@ namespace App\Exception;
 
 use Throwable;
 
-class BadRequestException extends \Exception
+class RequestDecodeException extends \Exception
 {
     public function __construct(?Throwable $previous = null)
     {

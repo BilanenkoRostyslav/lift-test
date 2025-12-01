@@ -8,20 +8,27 @@
     "ext-ctype": "*",
     "ext-iconv": "*",
     "doctrine/mongodb-odm-bundle": "^5.5.1",
-    "symfony/amqp-messenger": "8.0.*",
-    "symfony/console": "8.0.*",
-    "symfony/dotenv": "8.0.*",
+    "nelmio/api-doc-bundle": "v5.8.2",
+    "symfony/amqp-messenger": "7.4.*",
+    "symfony/asset": "8.0.*",
+    "symfony/console": "7.4.*",
+    "symfony/dotenv": "7.4.*",
     "symfony/flex": "^2.10",
-    "symfony/framework-bundle": "8.0.*",
-    "symfony/http-client": "8.0.*",
+    "symfony/framework-bundle": "7.4.*",
+    "symfony/http-client": "7.4.*",
     "symfony/monolog-bundle": "^4.0",
-    "symfony/property-access": "8.0.*",
-    "symfony/runtime": "8.0.*",
-    "symfony/serializer": "8.0.*",
-    "symfony/yaml": "8.0.*"
+    "symfony/property-access": "7.4.*",
+    "symfony/runtime": "7.4.*",
+    "symfony/serializer": "7.4.*",
+    "symfony/twig-bundle": "8.0.*",
+    "symfony/validator": "7.4.*",
+    "symfony/yaml": "7.4.*"
   },
   "require-dev": {
-    "phpstan/phpstan": "^2.1.32"
+    "phpstan/phpstan": "^2.1.32",
+    "phpstan/phpstan-symfony": "^2.0",
+    "phpunit/phpunit": "^12.4",
+    "symfony/browser-kit": "^7.4"
   },
   "config": {
     "allow-plugins": {
